@@ -5,105 +5,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vote for Dev</title>
     <style>
-       body {
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: linear-gradient(to right, #ff7e5f, #feb47b);  /* Smooth gradient background */
-}
+        /* Base Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background 0.3s, color 0.3s;  /* Smooth transition for background and text color */
+        }
 
-.container {
-    text-align: center;
-    padding: 40px;
-    background-color: white;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
-    width: 80%;
-    max-width: 500px;
-    transition: transform 0.3s ease;  /* Smooth transition for hover effect */
-}
+        .container {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            width: 80%;
+            max-width: 500px;
+            transition: transform 0.3s ease;  
+            position: relative;
+        }
 
-.container:hover {
-    transform: scale(1.05);  /* Slight zoom effect on hover */
-}
+        .container:hover {
+            transform: scale(1.05);
+        }
 
-h1 {
-    font-size: 30px;
-    color: #333;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
 
-button {
-    font-size: 18px;
-    padding: 15px 30px;
-    margin: 10px;
-    border: none;
-    border-radius: 50px;  /* Rounded buttons */
-    cursor: pointer;
-    transition: all 0.3s ease;  /* Smooth transition for hover effect */
-    width: 150px;
-}
+        button {
+            font-size: 18px;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 150px;
+        }
 
-button#yesBtn {
-    background-color: #28a745;  /* Green color */
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);  /* Shadow effect */
-}
+        button#yesBtn {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);
+        }
 
-button#yesBtn:hover {
-    background-color: #218838;  /* Darker green on hover */
-    box-shadow: 0 6px 12px rgba(0, 128, 0, 0.3);
-}
+        button#yesBtn:hover {
+            background-color: #218838;
+            box-shadow: 0 6px 12px rgba(0, 128, 0, 0.3);
+        }
 
-button#noBtn {
-    background-color: #dc3545;  /* Red color */
-    color: white;
-    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
-}
+        button#noBtn {
+            background-color: #dc3545;
+            color: white;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
 
-button#noBtn:hover {
-    background-color: #c82333;  /* Darker red on hover */
-    box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
-}
+        button#noBtn:hover {
+            background-color: #c82333;
+            box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
+        }
 
-p {
-    font-size: 22px;
-    color: #555;
-    margin-top: 20px;
-    font-weight: bold;
-}
+        p {
+            font-size: 22px;
+            color: #555;
+            margin-top: 20px;
+            font-weight: bold;
+        }
 
-span {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-}
+        span {
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-@media (max-width: 600px) {
-    .container {
-        width: 90%;
-        padding: 30px;
-    }
+        .disclaimer {
+            font-size: 14px;
+            color: #888;
+            margin-top: 20px;
+        }
 
-    h1 {
-        font-size: 24px;
-    }
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
 
-    button {
-        width: 130px;
-    }
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background: #333;
+            color: white;
+        }
 
-    p {
-        font-size: 18px;
-    }
-}
+        .container.dark-mode {
+            background-color: #444;
+            color: white;
+        }
+
+        .disclaimer.dark-mode {
+            color: #bbb;
+        }
+
+        .watermark.dark-mode {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Light Mode Styles (default) */
+        body.light-mode {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: black;
+        }
+
+        .container.light-mode {
+            background-color: white;
+            color: black;
+        }
+
+        .disclaimer.light-mode {
+            color: #888;
+        }
+
+        .watermark.light-mode {
+            color: rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                width: 130px;
+            }
+
+            p {
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="light-mode">
+    <button class="theme-toggle">Toggle Dark Mode</button>
     <div class="container">
         <h1>Would you vote for Dev as Cauvery House Captain?</h1>
         
@@ -111,7 +179,15 @@ span {
         <button id="noBtn">No</button>
 
         <p>Yes Votes: <span id="yesVotes">0</span> | No Votes: <span id="noVotes">0</span></p>
+        <p>Total Votes: <span id="totalVotes">0</span></p>
+        
+        <!-- Disclaimer -->
+        <p class="disclaimer">
+            This is an unofficial page for educational purposes only. It is not a real Indian School election page, just a poll to see if Dev will receive a good amount of votes.
+        </p>
     </div>
+
+    <div class="watermark">The Polls</div>
 
     <script>
         // Initialize vote counts
@@ -123,17 +199,33 @@ span {
         const noButton = document.getElementById("noBtn");
         const yesVotesElement = document.getElementById("yesVotes");
         const noVotesElement = document.getElementById("noVotes");
+        const totalVotesElement = document.getElementById("totalVotes");
+        const themeToggleButton = document.querySelector(".theme-toggle");
+        const body = document.body;
 
         // Function to handle "Yes" vote
         yesButton.addEventListener("click", function() {
             yesVotes++;
-            yesVotesElement.textContent = yesVotes;  // Update Yes count
+            updateVoteCounts();
         });
 
         // Function to handle "No" vote
         noButton.addEventListener("click", function() {
             noVotes++;
-            noVotesElement.textContent = noVotes;  // Update No count
+            updateVoteCounts();
+        });
+
+        // Update vote counts
+        function updateVoteCounts() {
+            yesVotesElement.textContent = yesVotes;  // Update Yes count
+            noVotesElement.textContent = noVotes;    // Update No count
+            totalVotesElement.textContent = yesVotes + noVotes; // Update Total count
+        }
+
+        // Toggle dark/light mode
+        themeToggleButton.addEventListener("click", function() {
+            body.classList.toggle("dark-mode");
+            body.classList.toggle("light-mode");
         });
     </script>
 </body>
