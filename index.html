@@ -1,170 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vote for Dev</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(to right, #ff7e5f, #feb47b);
-      color: black;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote for Dev</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: #333;
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-    .version-label {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      font-size: 18px;
-      color: #ff7e5f;
-      font-weight: bold;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
+        .disclaimer {
+            position: absolute;
+            top: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 8px 20px;
+            border-radius: 10px;
+        }
 
-    .disclaimer {
-      position: fixed;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 14px;
-      font-weight: bold;
-      color: #fff;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 5px 15px;
-      border-radius: 8px;
-      text-align: center;
-    }
+        .version-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 16px;
+            color: #fff;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
 
-    .container {
-      text-align: center;
-      padding: 40px;
-      background-color: white;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      border-radius: 15px;
-      width: 80%;
-      max-width: 500px;
-      transition: transform 0.3s ease;
-    }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+        }
 
-    .container:hover {
-      transform: scale(1.05);
-    }
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
 
-    h1 {
-      font-size: 30px;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
+        button {
+            font-size: 18px;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 150px;
+        }
 
-    button {
-      font-size: 18px;
-      padding: 15px 30px;
-      margin: 10px;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      width: 150px;
-    }
+        #yesBtn {
+            background-color: #28a745;
+            color: white;
+        }
 
-    button#yesBtn {
-      background-color: #28a745;
-      color: white;
-      box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);
-    }
+        #noBtn {
+            background-color: #dc3545;
+            color: white;
+        }
 
-    button#yesBtn:hover {
-      background-color: #218838;
-      box-shadow: 0 6px 12px rgba(0, 128, 0, 0.3);
-    }
+        p {
+            font-size: 20px;
+            color: #555;
+            margin-top: 20px;
+            font-weight: bold;
+        }
 
-    button#noBtn {
-      background-color: #dc3545;
-      color: white;
-      box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
-    }
+        span {
+            font-size: 22px;
+            font-weight: bold;
+        }
 
-    button#noBtn:hover {
-      background-color: #c82333;
-      box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
-    }
+        .bar-container {
+            width: 100%;
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            font-size: 14px;
+        }
 
-    p {
-      font-size: 22px;
-      color: #555;
-      margin-top: 20px;
-      font-weight: bold;
-    }
+        .bar {
+            height: 30px;
+            line-height: 30px;
+            color: white;
+            text-align: center;
+            transition: width 0.5s ease;
+        }
 
-    span {
-      font-size: 24px;
-      font-weight: bold;
-    }
+        .yes-bar {
+            background: #28a745;
+        }
 
-    .possibility {
-      margin-top: 30px;
-      font-size: 20px;
-      color: #333;
-      font-weight: bold;
-    }
-  </style>
+        .no-bar {
+            background: #dc3545;
+        }
+    </style>
 </head>
 <body>
+    <div class="disclaimer">This site is just a test poll and not official. This is for educational purposes only.</div>
+    <div class="version-label">Version 1.4</div>
 
-  <!-- Top Left Version Label -->
-  <div class="version-label">
-    Version 1.6
-  </div>
+    <div class="container">
+        <h1>Vote for Dev as Cauvery House Captain</h1>
+        <p>Would you vote for Dev?</p>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
 
-  <!-- Top Center Disclaimer -->
-  <div class="disclaimer">
-    This is just a test poll and not official.<br>This site is only for educational purposes only.
-  </div>
+        <p>Total Votes: <span id="voteCount">0</span></p>
+        <div class="bar-container">
+            <div class="bar yes-bar" id="yesBar" style="width: 0%">Yes: 0%</div>
+            <div class="bar no-bar" id="noBar" style="width: 0%">No: 0%</div>
+        </div>
+    </div>
 
-  <div class="container">
-    <h1>Vote for Dev as Cauvery House Captain</h1>
-    <p>Would you vote for Dev?</p>
-    <button id="yesBtn">Yes</button>
-    <button id="noBtn">No</button>
-    <p>Total Votes: <span id="voteCount">0</span></p>
-    <div class="possibility" id="possibilityMeter">Dev's Winning Possibility: 0%</div>
-  </div>
+    <script>
+        let yesBtn = document.getElementById('yesBtn');
+        let noBtn = document.getElementById('noBtn');
+        let voteCount = document.getElementById('voteCount');
+        let yesBar = document.getElementById('yesBar');
+        let noBar = document.getElementById('noBar');
 
-  <script>
-    let yesVotes = 0;
-    let noVotes = 0;
-    const voteCountEl = document.getElementById('voteCount');
-    const possibilityMeter = document.getElementById('possibilityMeter');
+        let votes = JSON.parse(localStorage.getItem('votes')) || { yes: 0, no: 0 };
 
-    function updateDisplay() {
-      const totalVotes = yesVotes + noVotes;
-      voteCountEl.textContent = totalVotes;
+        function updateUI() {
+            let totalVotes = votes.yes + votes.no;
+            voteCount.textContent = totalVotes;
 
-      if (totalVotes > 0) {
-        const percentage = Math.round((yesVotes / totalVotes) * 100);
-        possibilityMeter.textContent = `Dev's Winning Possibility: ${percentage}%`;
-      } else {
-        possibilityMeter.textContent = "Dev's Winning Possibility: 0%";
-      }
-    }
+            let yesPercent = totalVotes ? Math.round((votes.yes / totalVotes) * 100) : 0;
+            let noPercent = totalVotes ? 100 - yesPercent : 0;
 
-    document.getElementById('yesBtn').onclick = () => {
-      yesVotes++;
-      updateDisplay();
-    };
+            yesBar.style.width = yesPercent + '%';
+            yesBar.textContent = 'Yes: ' + yesPercent + '%';
 
-    document.getElementById('noBtn').onclick = () => {
-      noVotes++;
-      updateDisplay();
-    };
-  </script>
+            noBar.style.width = noPercent + '%';
+            noBar.textContent = 'No: ' + noPercent + '%';
+        }
 
+        yesBtn.onclick = function() {
+            votes.yes++;
+            localStorage.setItem('votes', JSON.stringify(votes));
+            updateUI();
+        };
+
+        noBtn.onclick = function() {
+            votes.no++;
+            localStorage.setItem('votes', JSON.stringify(votes));
+            updateUI();
+        };
+
+        updateUI();
+    </script>
 </body>
 </html>
