@@ -14,8 +14,9 @@
             height: 100vh;
             margin: 0;
             position: relative;
-            transition: background 0.3s, color 0.3s;
+            background-color: #f4f4f9;
             overflow-y: auto;
+            color: #333;
         }
 
         /* Version Label (Top Left Corner) */
@@ -39,7 +40,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border-radius: 15px;
             width: 80%;
-            max-width: 500px;
+            max-width: 600px;
             transition: transform 0.3s ease;
             position: relative;
         }
@@ -49,9 +50,10 @@
         }
 
         h1 {
-            font-size: 30px;
+            font-size: 36px;
             margin-bottom: 20px;
             font-weight: bold;
+            color: #333;
         }
 
         button {
@@ -62,41 +64,58 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 150px;
+            width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        button:hover {
+            transform: scale(1.05);
         }
 
         button#yesBtn {
             background-color: #28a745;
             color: white;
-            box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);
         }
 
         button#yesBtn:hover {
             background-color: #218838;
-            box-shadow: 0 6px 12px rgba(0, 128, 0, 0.3);
         }
 
         button#noBtn {
             background-color: #dc3545;
             color: white;
-            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
         }
 
         button#noBtn:hover {
             background-color: #c82333;
-            box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        button#nihalBtn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        button#nihalBtn:hover {
+            background-color: #0056b3;
         }
 
         p {
-            font-size: 22px;
-            color: #555;
+            font-size: 20px;
             margin-top: 20px;
             font-weight: bold;
+            color: #444;
         }
 
         span {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
+            color: #555;
+        }
+
+        .percentage {
+            font-size: 18px;
+            color: #333;
         }
 
         /* Countdown and Share Section */
@@ -189,6 +208,11 @@
 
         <p>Total Votes:</p>
         <p>Dev: <span id="devVotes">0</span> | Neha: <span id="nehaVotes">0</span> | Nihal: <span id="nihalVotes">0</span></p>
+        
+        <div class="percentage">
+            <p>Winning Percentage:</p>
+            <p>Dev: <span id="devPercentage">0%</span> | Neha: <span id="nehaPercentage">0%</span> | Nihal: <span id="nihalPercentage">0%</span></p>
+        </div>
 
         <div class="countdown">
             <p>Time Left: <span id="timer"></span></p>
@@ -222,21 +246,40 @@
         const nihalVotesElem = document.getElementById("nihalVotes");
         const shareCountElem = document.getElementById("shareCount");
         const timerElem = document.getElementById("timer");
+        const devPercentageElem = document.getElementById("devPercentage");
+        const nehaPercentageElem = document.getElementById("nehaPercentage");
+        const nihalPercentageElem = document.getElementById("nihalPercentage");
         const shareBtn = document.getElementById("shareBtn");
 
         // Vote Buttons
         document.getElementById("yesBtn").onclick = function() {
             devVotes++;
-            devVotesElem.textContent = devVotes;
+            updateVotes();
         };
         document.getElementById("noBtn").onclick = function() {
             nehaVotes++;
-            nehaVotesElem.textContent = nehaVotes;
+            updateVotes();
         };
         document.getElementById("nihalBtn").onclick = function() {
             nihalVotes++;
-            nihalVotesElem.textContent = nihalVotes;
+            updateVotes();
         };
+
+        // Update the votes and percentages
+        function updateVotes() {
+            const totalVotes = devVotes + nehaVotes + nihalVotes;
+            devVotesElem.textContent = devVotes;
+            nehaVotesElem.textContent = nehaVotes;
+            nihalVotesElem.textContent = nihalVotes;
+
+            const devPercentage = totalVotes > 0 ? ((devVotes / totalVotes) * 100).toFixed(2) : 0;
+            const nehaPercentage = totalVotes > 0 ? ((nehaVotes / totalVotes) * 100).toFixed(2) : 0;
+            const nihalPercentage = totalVotes > 0 ? ((nihalVotes / totalVotes) * 100).toFixed(2) : 0;
+
+            devPercentageElem.textContent = `${devPercentage}%`;
+            nehaPercentageElem.textContent = `${nehaPercentage}%`;
+            nihalPercentageElem.textContent = `${nihalPercentage}%`;
+        }
 
         // Countdown Timer
         setInterval(function() {
@@ -280,9 +323,7 @@
             devVotes = 0;
             nehaVotes = 0;
             nihalVotes = 0;
-            devVotesElem.textContent = devVotes;
-            nehaVotesElem.textContent = nehaVotes;
-            nihalVotesElem.textContent = nihalVotes;
+            updateVotes();
         };
 
         // Reset timer on admin panel
@@ -300,5 +341,3 @@
     </script>
 </body>
 </html>
-
-
