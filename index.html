@@ -7,66 +7,55 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            min-height: 100vh;
             margin: 0;
+            padding: 0;
             background: linear-gradient(to right, #ff7e5f, #feb47b);
-            color: #333;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .disclaimer {
-            position: absolute;
-            top: 10px;
-            text-align: center;
-            font-size: 14px;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 8px 20px;
-            border-radius: 10px;
+            color: black;
         }
 
         .version-label {
-            position: absolute;
+            position: fixed;
             top: 10px;
             left: 10px;
             font-size: 16px;
-            color: #fff;
+            color: #ff7e5f;
             font-weight: bold;
             background-color: rgba(0, 0, 0, 0.6);
             padding: 5px 10px;
             border-radius: 5px;
         }
 
-        .container {
+        .disclaimer {
             text-align: center;
-            padding: 40px;
+            font-size: 14px;
+            margin: 20px 10px 10px;
+            font-style: italic;
+            color: #444;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
             background-color: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
             border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
         }
 
         h1 {
-            font-size: 30px;
+            font-size: 28px;
             margin-bottom: 20px;
-            font-weight: bold;
         }
 
         button {
-            font-size: 18px;
-            padding: 15px 30px;
+            font-size: 16px;
+            padding: 12px 24px;
             margin: 10px;
             border: none;
-            border-radius: 50px;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 150px;
         }
 
         #yesBtn {
@@ -74,66 +63,88 @@
             color: white;
         }
 
+        #yesBtn:hover {
+            background-color: #218838;
+        }
+
         #noBtn {
             background-color: #dc3545;
             color: white;
         }
 
-        p {
-            font-size: 20px;
-            color: #555;
-            margin-top: 20px;
-            font-weight: bold;
+        #noBtn:hover {
+            background-color: #c82333;
         }
 
-        span {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .bar-container {
-            width: 100%;
-            background: #eee;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .bar {
-            height: 30px;
-            line-height: 30px;
-            color: white;
-            text-align: center;
-            transition: width 0.5s ease;
-        }
-
-        .yes-bar {
-            background: #28a745;
-        }
-
-        .no-bar {
-            background: #dc3545;
-        }
-
-        #thankYouMessage {
-            display: none;
+        .stats {
             font-size: 18px;
-            color: #333;
-            margin-top: 15px;
+            margin-top: 20px;
+            font-weight: bold;
         }
 
-        #countdown {
-            margin-top: 30px;
-            font-size: 16px;
-            color: #222;
+        #thankYou {
+            margin-top: 15px;
+            color: #333;
             font-weight: bold;
+        }
+
+        .share-section {
+            margin-top: 20px;
+        }
+
+        .admin-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #444;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .admin-panel input[type='password'] {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 80%;
+        }
+
+        .admin-panel button {
+            margin-top: 10px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .countdown {
+            font-size: 16px;
+            margin-top: 10px;
+            color: #555;
         }
     </style>
 </head>
 <body>
+    <div class="version-label">Version 1.9v</div>
     <div class="disclaimer">This site is just a test poll and not official. This is for educational purposes only.</div>
-    <div class="version-label">Version 1.4</div>
 
     <div class="container">
         <h1>Vote for Dev as Cauvery House Captain</h1>
@@ -141,79 +152,117 @@
         <button id="yesBtn">Yes</button>
         <button id="noBtn">No</button>
 
-        <p>Total Votes: <span id="voteCount">0</span></p>
-        <div class="bar-container">
-            <div class="bar yes-bar" id="yesBar" style="width: 0%">Yes: 0%</div>
-            <div class="bar no-bar" id="noBar" style="width: 0%">No: 0%</div>
+        <div class="stats">
+            Total Votes: <span id="voteCount">0</span><br>
+            Dev's Winning Chance: <span id="possibility">0%</span>
         </div>
 
-        <div id="thankYouMessage">✅ Thank you for voting!</div>
-        <div id="countdown">Countdown to Election Day: <span id="time"></span></div>
+        <p id="thankYou"></p>
+
+        <div class="share-section">
+            <button onclick="shareSite()">Share this Site</button>
+            <p>Shared <span id="shareCount">0</span> times</p>
+        </div>
+
+        <div class="countdown" id="countdown"></div>
     </div>
 
+    <div class="overlay" id="overlay"></div>
+    <div class="admin-panel" id="adminPanel">
+        <h3>Admin Panel</h3>
+        <input type="password" id="adminPass" placeholder="Enter Password" />
+        <br>
+        <button onclick="checkAdmin()">Submit</button>
+        <div id="adminControls" style="display:none;">
+            <button onclick="resetVotes()">Reset Votes</button>
+            <button onclick="resetShareCount()">Reset Shares</button>
+        </div>
+    </div>
+    <button class="admin-btn" onclick="showAdminPanel()">Admin</button>
+
     <script>
-        let yesBtn = document.getElementById('yesBtn');
-        let noBtn = document.getElementById('noBtn');
-        let voteCount = document.getElementById('voteCount');
-        let yesBar = document.getElementById('yesBar');
-        let noBar = document.getElementById('noBar');
-        let thankYouMessage = document.getElementById('thankYouMessage');
+        let totalVotes = 0;
+        let yesVotes = 0;
+        let noVotes = 0;
+        let shareCount = 0;
 
-        let votes = JSON.parse(localStorage.getItem('votes')) || { yes: 0, no: 0 };
+        const voteCount = document.getElementById('voteCount');
+        const possibility = document.getElementById('possibility');
+        const thankYou = document.getElementById('thankYou');
+        const shareDisplay = document.getElementById('shareCount');
 
-        function updateUI() {
-            let totalVotes = votes.yes + votes.no;
+        function updateStats() {
             voteCount.textContent = totalVotes;
-
-            let yesPercent = totalVotes ? Math.round((votes.yes / totalVotes) * 100) : 0;
-            let noPercent = totalVotes ? 100 - yesPercent : 0;
-
-            yesBar.style.width = yesPercent + '%';
-            yesBar.textContent = 'Yes: ' + yesPercent + '%';
-
-            noBar.style.width = noPercent + '%';
-            noBar.textContent = 'No: ' + noPercent + '%';
+            let percent = totalVotes ? Math.round((yesVotes / totalVotes) * 100) : 0;
+            possibility.textContent = percent + "%";
         }
 
-        function showThankYou() {
-            thankYouMessage.style.display = 'block';
-            setTimeout(() => {
-                thankYouMessage.style.display = 'none';
-            }, 2000);
+        document.getElementById('yesBtn').onclick = function() {
+            totalVotes++;
+            yesVotes++;
+            updateStats();
+            thankYou.textContent = "Thanks for voting!";
+        };
+
+        document.getElementById('noBtn').onclick = function() {
+            totalVotes++;
+            noVotes++;
+            updateStats();
+            thankYou.textContent = "Thanks for voting!";
+        };
+
+        function shareSite() {
+            shareCount++;
+            shareDisplay.textContent = shareCount;
+            alert("Link copied! Share it with your friends.");
         }
 
-        yesBtn.onclick = function () {
-            votes.yes++;
-            localStorage.setItem('votes', JSON.stringify(votes));
-            updateUI();
-            showThankYou();
-        };
+        function showAdminPanel() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'block';
+        }
 
-        noBtn.onclick = function () {
-            votes.no++;
-            localStorage.setItem('votes', JSON.stringify(votes));
-            updateUI();
-            showThankYou();
-        };
+        function checkAdmin() {
+            const pass = document.getElementById('adminPass').value;
+            if (pass === 'Vesni@2025') {
+                document.getElementById('adminControls').style.display = 'block';
+            } else {
+                alert("Incorrect password.");
+            }
+        }
 
-        updateUI();
+        function resetVotes() {
+            totalVotes = 0;
+            yesVotes = 0;
+            noVotes = 0;
+            updateStats();
+            thankYou.textContent = "Votes reset.";
+        }
+
+        function resetShareCount() {
+            shareCount = 0;
+            shareDisplay.textContent = shareCount;
+        }
 
         // Countdown Timer
-        const countdown = document.getElementById("time");
-        const targetDate = new Date("2025-04-24T00:00:00").getTime();
-
-        setInterval(() => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }, 1000);
+        const countdownEl = document.getElementById('countdown');
+        const endDate = new Date('2025-04-24T00:00:00');
+        function updateCountdown() {
+            const now = new Date();
+            const diff = endDate - now;
+            if (diff <= 0) {
+                countdownEl.textContent = "The voting has ended.";
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+            countdownEl.textContent = `Voting ends in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
+
 
