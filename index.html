@@ -1,268 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vote for Dev</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            color: black;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vote for Cauvery House Captain</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      color: #333;
+      overflow-x: hidden;
+    }
 
-        .version-label {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            font-size: 16px;
-            color: #ff7e5f;
-            font-weight: bold;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
+    .disclaimer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
 
-        .disclaimer {
-            text-align: center;
-            font-size: 14px;
-            margin: 20px 10px 10px;
-            font-style: italic;
-            color: #444;
-        }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
 
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
+    .vote-btn {
+      font-size: 16px;
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      color: #fff;
+      background-color: #007bff;
+      transition: background 0.3s;
+    }
 
-        button {
-            font-size: 16px;
-            padding: 12px 24px;
-            margin: 10px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    .vote-btn:hover {
+      background-color: #0056b3;
+    }
 
-        #yesBtn {
-            background-color: #28a745;
-            color: white;
-        }
+    .results, .live-feed {
+      margin-top: 20px;
+      font-size: 18px;
+    }
 
-        #yesBtn:hover {
-            background-color: #218838;
-        }
+    .possibility {
+      margin-top: 15px;
+      font-weight: bold;
+    }
 
-        #noBtn {
-            background-color: #dc3545;
-            color: white;
-        }
+    #countdown {
+      margin-top: 20px;
+      font-size: 20px;
+    }
 
-        #noBtn:hover {
-            background-color: #c82333;
-        }
+    .thank-you {
+      font-size: 18px;
+      margin-top: 10px;
+      color: green;
+    }
 
-        .stats {
-            font-size: 18px;
-            margin-top: 20px;
-            font-weight: bold;
-        }
+    .share-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      background: #28a745;
+      color: white;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+    }
 
-        #thankYou {
-            margin-top: 15px;
-            color: #333;
-            font-weight: bold;
-        }
+    .admin-panel {
+      margin-top: 20px;
+    }
 
-        .share-section {
-            margin-top: 20px;
-        }
+    .admin-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
 
-        .admin-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #444;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-        }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
 
-        .admin-panel {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-            border-radius: 15px;
-            text-align: center;
-        }
+    .live-feed ul {
+      padding: 0;
+      list-style: none;
+    }
 
-        .admin-panel input[type='password'] {
-            padding: 10px;
-            margin-bottom: 10px;
-            width: 80%;
-        }
-
-        .admin-panel button {
-            margin-top: 10px;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-        }
-
-        .countdown {
-            font-size: 16px;
-            margin-top: 10px;
-            color: #555;
-        }
-    </style>
+    .live-feed li {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-    <div class="version-label">Version 1.9v</div>
-    <div class="disclaimer">This site is just a test poll and not official. This is for educational purposes only.</div>
+  <div class="disclaimer">This site is only for Educational Purposes only. This is just a test poll and not official.</div>
 
-    <div class="container">
-        <h1>Vote for Dev as Cauvery House Captain</h1>
-        <p>Would you vote for Dev?</p>
-        <button id="yesBtn">Yes</button>
-        <button id="noBtn">No</button>
+  <div class="container">
+    <h1>Vote for Cauvery House Captain</h1>
 
-        <div class="stats">
-            Total Votes: <span id="voteCount">0</span><br>
-            Dev's Winning Chance: <span id="possibility">0%</span>
-        </div>
+    <button class="vote-btn" onclick="castVote('Dev')">Vote Dev</button>
+    <button class="vote-btn" onclick="castVote('Neha')">Vote Neha</button>
+    <button class="vote-btn" onclick="castVote('Nihal')">Vote Nihal</button>
 
-        <p id="thankYou"></p>
-
-        <div class="share-section">
-            <button onclick="shareSite()">Share this Site</button>
-            <p>Shared <span id="shareCount">0</span> times</p>
-        </div>
-
-        <div class="countdown" id="countdown"></div>
+    <div class="results">
+      <p>Total Votes:</p>
+      <p>Dev: <span id="devVotes">0</span></p>
+      <p>Neha: <span id="nehaVotes">0</span></p>
+      <p>Nihal: <span id="nihalVotes">0</span></p>
     </div>
 
-    <div class="overlay" id="overlay"></div>
-    <div class="admin-panel" id="adminPanel">
-        <h3>Admin Panel</h3>
-        <input type="password" id="adminPass" placeholder="Enter Password" />
-        <br>
-        <button onclick="checkAdmin()">Submit</button>
-        <div id="adminControls" style="display:none;">
-            <button onclick="resetVotes()">Reset Votes</button>
-            <button onclick="resetShareCount()">Reset Shares</button>
-        </div>
+    <div class="possibility" id="possibility"></div>
+
+    <div class="live-feed">
+      <h3>Live Vote Feed</h3>
+      <ul id="voteFeed"></ul>
     </div>
-    <button class="admin-btn" onclick="showAdminPanel()">Admin</button>
 
-    <script>
-        let totalVotes = 0;
-        let yesVotes = 0;
-        let noVotes = 0;
-        let shareCount = 0;
+    <div id="countdown"></div>
+    <div class="thank-you">Thank you for participating!</div>
+    <button class="share-btn" onclick="sharePage()">Share This Poll</button>
+    <p>Shared: <span id="shareCount">0</span> times</p>
 
-        const voteCount = document.getElementById('voteCount');
-        const possibility = document.getElementById('possibility');
-        const thankYou = document.getElementById('thankYou');
-        const shareDisplay = document.getElementById('shareCount');
+    <div class="admin-panel">
+      <button class="vote-btn" onclick="showAdminPopup()">Admin Panel</button>
+    </div>
+  </div>
 
-        function updateStats() {
-            voteCount.textContent = totalVotes;
-            let percent = totalVotes ? Math.round((yesVotes / totalVotes) * 100) : 0;
-            possibility.textContent = percent + "%";
-        }
+  <div class="overlay" id="overlay"></div>
+  <div class="admin-popup" id="adminPopup">
+    <input type="password" id="adminPassword" placeholder="Enter Admin Password" />
+    <button onclick="loginAdmin()">Login</button>
+  </div>
 
-        document.getElementById('yesBtn').onclick = function() {
-            totalVotes++;
-            yesVotes++;
-            updateStats();
-            thankYou.textContent = "Thanks for voting!";
-        };
+  <script>
+    let devVotes = 0, nehaVotes = 0, nihalVotes = 0, shares = 0;
+    let voteFeed = [];
 
-        document.getElementById('noBtn').onclick = function() {
-            totalVotes++;
-            noVotes++;
-            updateStats();
-            thankYou.textContent = "Thanks for voting!";
-        };
+    function castVote(name) {
+      voteFeed.unshift(`Voted for ${name}`);
+      if (voteFeed.length > 10) voteFeed.pop();
+      updateFeed();
+      if (name === 'Dev') devVotes++;
+      else if (name === 'Neha') nehaVotes++;
+      else if (name === 'Nihal') nihalVotes++;
+      updateVotes();
+    }
 
-        function shareSite() {
-            shareCount++;
-            shareDisplay.textContent = shareCount;
-            alert("Link copied! Share it with your friends.");
-        }
+    function updateFeed() {
+      const list = document.getElementById('voteFeed');
+      list.innerHTML = voteFeed.map(vote => `<li>${vote}</li>`).join('');
+    }
 
-        function showAdminPanel() {
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('adminPanel').style.display = 'block';
-        }
+    function updateVotes() {
+      document.getElementById('devVotes').textContent = devVotes;
+      document.getElementById('nehaVotes').textContent = nehaVotes;
+      document.getElementById('nihalVotes').textContent = nihalVotes;
+      const total = devVotes + nehaVotes + nihalVotes;
+      const possibilityText = total > 0 ? `Winning Possibility - Dev: ${(devVotes / total * 100).toFixed(1)}% | Neha: ${(nehaVotes / total * 100).toFixed(1)}% | Nihal: ${(nihalVotes / total * 100).toFixed(1)}%` : '';
+      document.getElementById('possibility').textContent = possibilityText;
+    }
 
-        function checkAdmin() {
-            const pass = document.getElementById('adminPass').value;
-            if (pass === 'Vesni@2025') {
-                document.getElementById('adminControls').style.display = 'block';
-            } else {
-                alert("Incorrect password.");
-            }
-        }
+    function sharePage() {
+      shares++;
+      document.getElementById('shareCount').textContent = shares;
+      alert("Thanks for sharing!");
+    }
 
-        function resetVotes() {
-            totalVotes = 0;
-            yesVotes = 0;
-            noVotes = 0;
-            updateStats();
-            thankYou.textContent = "Votes reset.";
-        }
+    function showAdminPopup() {
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('adminPopup').style.display = 'block';
+    }
 
-        function resetShareCount() {
-            shareCount = 0;
-            shareDisplay.textContent = shareCount;
-        }
+    function loginAdmin() {
+      const password = document.getElementById('adminPassword').value;
+      if (password === "Vesni@2025") {
+        devVotes = 0; nehaVotes = 0; nihalVotes = 0; shares = 0;
+        voteFeed = [];
+        updateVotes();
+        updateFeed();
+        document.getElementById('shareCount').textContent = '0';
+        alert("Votes and shares have been reset.");
+        document.getElementById('adminPopup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+      } else {
+        alert("Incorrect password");
+      }
+    }
 
-        // Countdown Timer
-        const countdownEl = document.getElementById('countdown');
-        const endDate = new Date('2025-04-24T00:00:00');
-        function updateCountdown() {
-            const now = new Date();
-            const diff = endDate - now;
-            if (diff <= 0) {
-                countdownEl.textContent = "The voting has ended.";
-                return;
-            }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const seconds = Math.floor((diff / 1000) % 60);
-            countdownEl.textContent = `Voting ends in ${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
-        setInterval(updateCountdown, 1000);
-    </script>
+    // Countdown Timer
+    const countdown = () => {
+      const endDate = new Date("2025-04-24T00:00:00").getTime();
+      const now = new Date().getTime();
+      const diff = endDate - now;
+
+      if (diff < 0) {
+        document.getElementById('countdown').textContent = "Poll Closed";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('countdown').textContent = `Time left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    };
+
+    setInterval(countdown, 1000);
+  </script>
 </body>
 </html>
+
 
 
