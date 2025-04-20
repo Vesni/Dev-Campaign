@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vote for Dev</title>
     <style>
-        /* Base Styles */
+        /* General Body Styling */
         body {
             font-family: 'Arial', sans-serif;
             display: flex;
@@ -13,9 +13,24 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            transition: background 0.3s, color 0.3s;  /* Smooth transition for background and text color */
+            position: relative;
+            transition: background 0.3s, color 0.3s;
         }
 
+        /* Version Label (Top Left Corner) */
+        .version-label {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 18px;
+            color: #ff7e5f;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        /* Main Container */
         .container {
             text-align: center;
             padding: 40px;
@@ -24,7 +39,7 @@
             border-radius: 15px;
             width: 80%;
             max-width: 500px;
-            transition: transform 0.3s ease;  
+            transition: transform 0.3s ease;
             position: relative;
         }
 
@@ -83,19 +98,25 @@
             font-weight: bold;
         }
 
-        .disclaimer {
+        /* Change Log at the Bottom */
+        .change-log {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
             font-size: 14px;
             color: #888;
-            margin-top: 20px;
+            background-color: #f0f0f0;
+            padding: 15px;
         }
 
-        .watermark {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 12px;
-            color: rgba(0, 0, 0, 0.2);
-            font-weight: bold;
+        .change-log ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .change-log li {
+            margin: 5px 0;
         }
 
         /* Dark Mode Styles */
@@ -109,15 +130,11 @@
             color: white;
         }
 
-        .disclaimer.dark-mode {
-            color: #bbb;
+        h1.dark-mode, p.dark-mode {
+            color: white;
         }
 
-        .watermark.dark-mode {
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Light Mode Styles (default) */
+        /* Light Mode Styles */
         body.light-mode {
             background: linear-gradient(to right, #ff7e5f, #feb47b);
             color: black;
@@ -128,14 +145,11 @@
             color: black;
         }
 
-        .disclaimer.light-mode {
-            color: #888;
+        h1.light-mode, p.light-mode {
+            color: black;
         }
 
-        .watermark.light-mode {
-            color: rgba(0, 0, 0, 0.2);
-        }
-
+        /* Toggle Button */
         .theme-toggle {
             position: absolute;
             top: 20px;
@@ -149,84 +163,60 @@
             cursor: pointer;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 600px) {
-            .container {
-                width: 90%;
-                padding: 30px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            button {
-                width: 130px;
-            }
-
-            p {
-                font-size: 18px;
-            }
-        }
     </style>
 </head>
-<body class="light-mode">
-    <button class="theme-toggle">Toggle Dark Mode</button>
+<body>
+
+    <!-- Top Left Version Label -->
+    <div class="version-label">
+        Updated Version 1.2
+    </div>
+
     <div class="container">
-        <h1>Would you vote for Dev as Cauvery House Captain?</h1>
-        
+        <h1>Vote for Dev as Cauvery House Captain</h1>
+        <p>Would you vote for Dev?</p>
         <button id="yesBtn">Yes</button>
         <button id="noBtn">No</button>
 
-        <p>Yes Votes: <span id="yesVotes">0</span> | No Votes: <span id="noVotes">0</span></p>
-        <p>Total Votes: <span id="totalVotes">0</span></p>
-        
-        <!-- Disclaimer -->
-        <p class="disclaimer">
-            This is an unofficial page for educational purposes only. It is not a real Indian School election page, just a poll to see if Dev will receive a good amount of votes.
-        </p>
+        <p>Total Votes: <span id="voteCount">0</span></p>
     </div>
 
-    <div class="watermark">The Polls</div>
+    <!-- Change Log at the Bottom -->
+    <div class="change-log">
+        <h3>Change Log:</h3>
+        <ul>
+            <li>Version 1.0: Initial version with vote buttons and counter.</li>
+            <li>Version 1.1: Added dark mode and light mode toggle.</li>
+            <li>Version 1.2: Added version display on top-left and change log at the bottom.</li>
+        </ul>
+    </div>
+
+    <!-- Dark Mode / Light Mode Toggle Button -->
+    <button class="theme-toggle">Toggle Dark/Light Mode</button>
 
     <script>
-        // Initialize vote counts
-        let yesVotes = 0;
-        let noVotes = 0;
+        let yesBtn = document.getElementById('yesBtn');
+        let noBtn = document.getElementById('noBtn');
+        let voteCount = document.getElementById('voteCount');
+        let totalVotes = 0;
 
-        // Get buttons and vote counts
-        const yesButton = document.getElementById("yesBtn");
-        const noButton = document.getElementById("noBtn");
-        const yesVotesElement = document.getElementById("yesVotes");
-        const noVotesElement = document.getElementById("noVotes");
-        const totalVotesElement = document.getElementById("totalVotes");
-        const themeToggleButton = document.querySelector(".theme-toggle");
+        yesBtn.onclick = function() {
+            totalVotes++;
+            voteCount.textContent = totalVotes;
+        };
+
+        noBtn.onclick = function() {
+            totalVotes--;
+            voteCount.textContent = totalVotes;
+        };
+
+        const themeToggle = document.querySelector('.theme-toggle');
         const body = document.body;
-
-        // Function to handle "Yes" vote
-        yesButton.addEventListener("click", function() {
-            yesVotes++;
-            updateVoteCounts();
-        });
-
-        // Function to handle "No" vote
-        noButton.addEventListener("click", function() {
-            noVotes++;
-            updateVoteCounts();
-        });
-
-        // Update vote counts
-        function updateVoteCounts() {
-            yesVotesElement.textContent = yesVotes;  // Update Yes count
-            noVotesElement.textContent = noVotes;    // Update No count
-            totalVotesElement.textContent = yesVotes + noVotes; // Update Total count
-        }
-
-        // Toggle dark/light mode
-        themeToggleButton.addEventListener("click", function() {
-            body.classList.toggle("dark-mode");
-            body.classList.toggle("light-mode");
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
         });
     </script>
+
 </body>
 </html>
