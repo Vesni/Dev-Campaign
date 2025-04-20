@@ -32,6 +32,26 @@
             border-radius: 5px;
         }
 
+        /* Rating Container (Top Right Corner) */
+        .rating-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: gold;
+            display: flex;
+            align-items: center;
+        }
+
+        .rating-container span {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        .rating-container i {
+            cursor: pointer;
+        }
+
         /* Main Container */
         .container {
             text-align: center;
@@ -130,27 +150,25 @@
             font-size: 14px;
         }
 
-        /* Toggle Button */
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 25px;
-            cursor: pointer;
-        }
-
     </style>
 </head>
 <body>
 
     <!-- Top Left Version Label -->
     <div class="version-label">
-        Updated Version 1.3
+        Updated Version 1.4
+    </div>
+
+    <!-- Rating System (Top Right Corner) -->
+    <div class="rating-container">
+        <div id="stars">
+            <i class="fa fa-star" data-rating="1"></i>
+            <i class="fa fa-star" data-rating="2"></i>
+            <i class="fa fa-star" data-rating="3"></i>
+            <i class="fa fa-star" data-rating="4"></i>
+            <i class="fa fa-star" data-rating="5"></i>
+        </div>
+        <span id="ratingText">Rating: Not Rated</span>
     </div>
 
     <div class="container">
@@ -170,8 +188,12 @@
             <li><strong>Version 1.1:</strong> Added dark mode and light mode toggle.</li>
             <li><strong>Version 1.2:</strong> Added version display on top-left and change log at the bottom.</li>
             <li><strong>Version 1.3:</strong> Removed dark mode, added vote persistence (localStorage), and improved code structure.</li>
+            <li><strong>Version 1.4:</strong> Added star rating system (1-5 stars) with persistent ratings.</li>
         </ul>
     </div>
+
+    <!-- Include Font Awesome for stars -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
     <script>
         let yesBtn = document.getElementById('yesBtn');
@@ -185,16 +207,5 @@
         yesBtn.onclick = function() {
             totalVotes++;
             voteCount.textContent = totalVotes;
-            localStorage.setItem('totalVotes', totalVotes);
-        };
-
-        noBtn.onclick = function() {
-            totalVotes--;
-            voteCount.textContent = totalVotes;
-            localStorage.setItem('totalVotes', totalVotes);
-        };
-    </script>
-
-</body>
-</html>
+            localStorage.setItem('
 
