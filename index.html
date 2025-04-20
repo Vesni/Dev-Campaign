@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cauvery House Captain</title>
+    <title>Vote for Dev</title>
     <style>
         /* General Body Styling */
         body {
@@ -162,7 +162,7 @@
 
     <!-- Main Container -->
     <div class="container">
-        <h1>Vote for Cauvery House Captain</h1>
+        <h1>Vote for Dev as Cauvery House Captain</h1>
 
         <!-- Vote Buttons -->
         <button id="devVote">Vote for Dev</button>
@@ -187,15 +187,15 @@
 
     <!-- Version Label -->
     <div class="version-label">
-        Version 2.1 Release 
+        Version 1.5
     </div>
 
     <script>
-        // Initialize vote counts for each contestant
-        let devVotes = 0;
-        let nehaVotes = 0;
-        let nihalVotes = 0;
-        let totalVotes = 0;
+        // Initialize vote counts from localStorage or default to 0
+        let devVotes = parseInt(localStorage.getItem("devVotes")) || 0;
+        let nehaVotes = parseInt(localStorage.getItem("nehaVotes")) || 0;
+        let nihalVotes = parseInt(localStorage.getItem("nihalVotes")) || 0;
+        let totalVotes = devVotes + nehaVotes + nihalVotes;
 
         // Get references to DOM elements
         let voteCount = document.getElementById("voteCount");
@@ -229,6 +229,8 @@
         document.getElementById("devVote").onclick = function () {
             devVotes++;
             totalVotes++;
+            localStorage.setItem("devVotes", devVotes);
+            localStorage.setItem("totalVotes", totalVotes);
             voteCount.textContent = totalVotes;
             updateWinnerPrediction();
         };
@@ -236,6 +238,8 @@
         document.getElementById("nehaVote").onclick = function () {
             nehaVotes++;
             totalVotes++;
+            localStorage.setItem("nehaVotes", nehaVotes);
+            localStorage.setItem("totalVotes", totalVotes);
             voteCount.textContent = totalVotes;
             updateWinnerPrediction();
         };
@@ -243,6 +247,8 @@
         document.getElementById("nihalVote").onclick = function () {
             nihalVotes++;
             totalVotes++;
+            localStorage.setItem("nihalVotes", nihalVotes);
+            localStorage.setItem("totalVotes", totalVotes);
             voteCount.textContent = totalVotes;
             updateWinnerPrediction();
         };
@@ -281,8 +287,11 @@
                 alert("Sharing not supported on this browser.");
             }
         }
+
+        // Set initial vote count and winner prediction
+        voteCount.textContent = totalVotes;
+        updateWinnerPrediction();
     </script>
 
 </body>
 </html>
-
