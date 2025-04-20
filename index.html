@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vote for Dev</title>
+    <title>Vote for Cauvery House Captain</title>
     <style>
         /* General Body Styling */
         body {
@@ -194,7 +194,7 @@
 
     <!-- Version Label -->
     <div class="version-label">
-        Updated Version 1.5
+        Updated Version 2.0 Alpha
     </div>
 
     <!-- Main Container -->
@@ -232,6 +232,10 @@
         <button id="resetTimerBtn">Reset Timer</button>
     </div>
 
+    <!-- Sound Effects -->
+    <audio id="voteSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+    <audio id="shareSound" src="https://www.soundjay.com/button/beep-09.wav"></audio>
+
     <script>
         // Variables for votes and countdown
         let devVotes = 0;
@@ -255,14 +259,17 @@
         document.getElementById("yesBtn").onclick = function() {
             devVotes++;
             updateVotes();
+            document.getElementById("voteSound").play();
         };
         document.getElementById("noBtn").onclick = function() {
             nehaVotes++;
             updateVotes();
+            document.getElementById("voteSound").play();
         };
         document.getElementById("nihalBtn").onclick = function() {
             nihalVotes++;
             updateVotes();
+            document.getElementById("voteSound").play();
         };
 
         // Update the votes and percentages
@@ -302,6 +309,7 @@
         shareBtn.onclick = function() {
             totalShares++;
             shareCountElem.textContent = totalShares;
+            document.getElementById("shareSound").play();
             alert("Thank you for sharing!");
         };
 
@@ -312,7 +320,7 @@
         const resetBtn = document.getElementById("resetBtn");
         const resetTimerBtn = document.getElementById("resetTimerBtn");
 
-        // Open Admin Panel (prompt for password)
+        // Admin Panel Access
         function openAdminPanel() {
             adminOverlay.style.display = "block";
             adminPanel.style.display = "block";
@@ -337,7 +345,6 @@
                 openAdminPanel();
             }
         });
-
     </script>
 </body>
 </html>
