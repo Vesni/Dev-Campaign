@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vote for Dev Tilwani</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #001f3f, #003366);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      animation: slideIn 1s ease-out;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #ffcc00;
+      margin-bottom: 1.5rem;
+      animation: fadeIn 2s ease-out;
+    }
+
+
+
+    button {
+      background-color: #ffcc00;
+      color: #001f3f;
+      font-size: 1.5rem;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ffcc00;
+      animation: bounce 1.5s infinite;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #ffcc00;
+    }
+
+    #counter {
+      margin-top: 1.5rem;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ffcc00;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background music -->
+  <audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
+  
+
+  <!-- Headings and vote button -->
+  <h1>Would you vote for Dev Tilwani as Cauvery House Captain?</h1>
+  <h2>Driven by Passion. Chosen for Cauvery.</h2>
+
+  <button onclick="voteYes()">YES ✅</button>
+
+  <div id="counter">Votes: 0</div>
+
+  <script>
+    let votes = localStorage.getItem('devVotes') || 0;
+    document.getElementById("counter").textContent = "Votes: " + votes;
+
+    function voteYes() {
+      votes++;
+      localStorage.setItem('devVotes', votes);
+      document.getElementById("counter").textContent = "Votes: " + votes;
+    }
+  </script>
+
+</body>
+</html>
