@@ -115,6 +115,20 @@
         .no-bar {
             background: #dc3545;
         }
+
+        #thankYouMessage {
+            display: none;
+            font-size: 18px;
+            color: #333;
+            margin-top: 15px;
+        }
+
+        #countdown {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #222;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -132,6 +146,9 @@
             <div class="bar yes-bar" id="yesBar" style="width: 0%">Yes: 0%</div>
             <div class="bar no-bar" id="noBar" style="width: 0%">No: 0%</div>
         </div>
+
+        <div id="thankYouMessage">✅ Thank you for voting!</div>
+        <div id="countdown">Countdown to Election Day: <span id="time"></span></div>
     </div>
 
     <script>
@@ -140,6 +157,7 @@
         let voteCount = document.getElementById('voteCount');
         let yesBar = document.getElementById('yesBar');
         let noBar = document.getElementById('noBar');
+        let thankYouMessage = document.getElementById('thankYouMessage');
 
         let votes = JSON.parse(localStorage.getItem('votes')) || { yes: 0, no: 0 };
 
@@ -157,19 +175,45 @@
             noBar.textContent = 'No: ' + noPercent + '%';
         }
 
-        yesBtn.onclick = function() {
+        function showThankYou() {
+            thankYouMessage.style.display = 'block';
+            setTimeout(() => {
+                thankYouMessage.style.display = 'none';
+            }, 2000);
+        }
+
+        yesBtn.onclick = function () {
             votes.yes++;
             localStorage.setItem('votes', JSON.stringify(votes));
             updateUI();
+            showThankYou();
         };
 
-        noBtn.onclick = function() {
+        noBtn.onclick = function () {
             votes.no++;
             localStorage.setItem('votes', JSON.stringify(votes));
             updateUI();
+            showThankYou();
         };
 
         updateUI();
+
+        // Countdown Timer
+        const countdown = document.getElementById("time");
+        const targetDate = new Date("2025-04-24T00:00:00").getTime();
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }, 1000);
     </script>
 </body>
 </html>
+
