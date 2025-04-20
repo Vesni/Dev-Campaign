@@ -165,11 +165,11 @@
 
     </style>
 </head>
-<body>
+<body class="light-mode">
 
     <!-- Top Left Version Label -->
     <div class="version-label">
-        Updated Version 1.2
+        Updated Version 1.3
     </div>
 
     <div class="container">
@@ -188,6 +188,7 @@
             <li>Version 1.0: Initial version with vote buttons and counter.</li>
             <li>Version 1.1: Added dark mode and light mode toggle.</li>
             <li>Version 1.2: Added version display on top-left and change log at the bottom.</li>
+            <li>Version 1.3: Added vote persistence (localStorage) and improved code structure.</li>
         </ul>
     </div>
 
@@ -198,20 +199,27 @@
         let yesBtn = document.getElementById('yesBtn');
         let noBtn = document.getElementById('noBtn');
         let voteCount = document.getElementById('voteCount');
-        let totalVotes = 0;
+        let totalVotes = localStorage.getItem('totalVotes') ? parseInt(localStorage.getItem('totalVotes')) : 0;
+
+        // Initialize the vote count
+        voteCount.textContent = totalVotes;
 
         yesBtn.onclick = function() {
             totalVotes++;
             voteCount.textContent = totalVotes;
+            localStorage.setItem('totalVotes', totalVotes);
         };
 
         noBtn.onclick = function() {
             totalVotes--;
             voteCount.textContent = totalVotes;
+            localStorage.setItem('totalVotes', totalVotes);
         };
 
         const themeToggle = document.querySelector('.theme-toggle');
         const body = document.body;
+
+        // Toggle between dark and light mode on button click
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             body.classList.toggle('light-mode');
