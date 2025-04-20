@@ -28,7 +28,7 @@ A countdown timer will show the time remaining until the election deadline.
 You can share the poll using the share button provided.
 
 Admin Features:
-An Admin Panel is available to reset votes or perform other administrative tasks. The admin must enter the correct password: Vesni@2025 to access this feature.
+An Admin Panel is available to reset votes or perform other administrative tasks. The admin must enter the correct password to access this feature.
 
 Technology Used:
 HTML for the structure
