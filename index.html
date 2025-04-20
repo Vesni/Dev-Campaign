@@ -1,113 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Vote for Dev Tilwani</title>
-  <style>
-    body {
-      background: linear-gradient(135deg, #001f3f, #003366);
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-      text-align: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote for Dev</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      animation: slideIn 1s ease-out;
-    }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
 
-    h2 {
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: #ffcc00;
-      margin-bottom: 1.5rem;
-      animation: fadeIn 2s ease-out;
-    }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
+        button#yesBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
 
-    button {
-      background-color: #ffcc00;
-      color: #001f3f;
-      font-size: 1.5rem;
-      padding: 1rem 2.5rem;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
-      box-shadow: 0 0 15px #ffcc00;
-      animation: bounce 1.5s infinite;
-      transition: all 0.3s ease;
-    }
+        button#noBtn {
+            background-color: #f44336;
+            color: white;
+        }
 
-    button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 25px #ffcc00;
-    }
-
-    #counter {
-      margin-top: 1.5rem;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #ffcc00;
-    }
-
-    @keyframes slideIn {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0.5); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-  </style>
+        p {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Would you vote for Dev as Cauvery House Captain?</h1>
+        
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
 
-  <!-- Background music -->
-  <audio autoplay loop>
-    <source src="music.mp3" type="audio/mpeg">
-    Your browser does not support the audio tag.
-  </audio>
+        <p>Yes Votes: <span id="yesVotes">0</span> | No Votes: <span id="noVotes">0</span></p>
+    </div>
 
-  
+    <script>
+        // Initialize vote counts
+        let yesVotes = 0;
+        let noVotes = 0;
 
-  <!-- Headings and vote button -->
-  <h1>Would you vote for Dev Tilwani as Cauvery House Captain?</h1>
-  <h2>Driven by Passion. Chosen for Cauvery.</h2>
+        // Get buttons and vote counts
+        const yesButton = document.getElementById("yesBtn");
+        const noButton = document.getElementById("noBtn");
+        const yesVotesElement = document.getElementById("yesVotes");
+        const noVotesElement = document.getElementById("noVotes");
 
-  <button onclick="voteYes()">YES ✅</button>
+        // Function to handle "Yes" vote
+        yesButton.addEventListener("click", function() {
+            yesVotes++;
+            yesVotesElement.textContent = yesVotes;  // Update Yes count
+        });
 
-  <div id="counter">Votes: 0</div>
-
-  <script>
-    let votes = localStorage.getItem('devVotes') || 0;
-    document.getElementById("counter").textContent = "Votes: " + votes;
-
-    function voteYes() {
-      votes++;
-      localStorage.setItem('devVotes', votes);
-      document.getElementById("counter").textContent = "Votes: " + votes;
-    }
-  </script>
-
+        // Function to handle "No" vote
+        noButton.addEventListener("click", function() {
+            noVotes++;
+            noVotesElement.textContent = noVotes;  // Update No count
+        });
+    </script>
 </body>
 </html>
