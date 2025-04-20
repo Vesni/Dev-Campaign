@@ -207,5 +207,40 @@
         yesBtn.onclick = function() {
             totalVotes++;
             voteCount.textContent = totalVotes;
-            localStorage.setItem('
+            localStorage.setItem('totalVotes', totalVotes);
+        };
+
+        noBtn.onclick = function() {
+            totalVotes--;
+            voteCount.textContent = totalVotes;
+            localStorage.setItem('totalVotes', totalVotes);
+        };
+
+        // Star Rating System
+        let stars = document.querySelectorAll('.rating-container i');
+        let ratingText = document.getElementById('ratingText');
+        let savedRating = localStorage.getItem('rating') ? parseInt(localStorage.getItem('rating')) : 0;
+
+        // Highlight the saved rating
+        if (savedRating) {
+            for (let i = 0; i < savedRating; i++) {
+                stars[i].style.color = 'gold';
+            }
+            ratingText.textContent = `Rating: ${savedRating} Stars`;
+        }
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                let rating = parseInt(star.getAttribute('data-rating'));
+                localStorage.setItem('rating', rating);
+                for (let i = 0; i < stars.length; i++) {
+                    stars[i].style.color = i < rating ? 'gold' : 'gray';
+                }
+                ratingText.textContent = `Rating: ${rating} Stars`;
+            });
+        });
+    </script>
+
+</body>
+</html>
 
