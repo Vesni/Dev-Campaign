@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vote for Cauvery House Captain</title>
+    <title>Cauvery House Captain</title>
     <style>
         /* General Body Styling */
         body {
@@ -14,22 +14,7 @@
             height: 100vh;
             margin: 0;
             position: relative;
-            background-color: #f4f4f9;
-            overflow-y: auto;
-            color: #333;
-        }
-
-        /* Version Label (Top Left Corner) */
-        .version-label {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            font-size: 18px;
-            color: #ff7e5f;
-            font-weight: bold;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 5px 10px;
-            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
         }
 
         /* Main Container */
@@ -40,20 +25,15 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border-radius: 15px;
             width: 80%;
-            max-width: 600px;
+            max-width: 500px;
             transition: transform 0.3s ease;
             position: relative;
         }
 
-        .container:hover {
-            transform: scale(1.05);
-        }
-
         h1 {
-            font-size: 36px;
+            font-size: 30px;
             margin-bottom: 20px;
             font-weight: bold;
-            color: #333;
         }
 
         button {
@@ -64,287 +44,245 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 200px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            outline: none;
+            width: 150px;
         }
 
-        button:hover {
-            transform: scale(1.05);
-        }
-
-        button#yesBtn {
+        button#devVote {
             background-color: #28a745;
             color: white;
         }
 
-        button#yesBtn:hover {
+        button#devVote:hover {
             background-color: #218838;
         }
 
-        button#noBtn {
+        button#nehaVote {
+            background-color: #007bff;
+            color: white;
+        }
+
+        button#nehaVote:hover {
+            background-color: #0056b3;
+        }
+
+        button#nihalVote {
             background-color: #dc3545;
             color: white;
         }
 
-        button#noBtn:hover {
+        button#nihalVote:hover {
             background-color: #c82333;
         }
 
-        button#nihalBtn {
-            background-color: #007bff;
-            color: white;
-        }
-
-        button#nihalBtn:hover {
-            background-color: #0056b3;
-        }
-
         p {
-            font-size: 20px;
+            font-size: 22px;
+            color: #555;
             margin-top: 20px;
             font-weight: bold;
-            color: #444;
         }
 
         span {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
-            color: #555;
         }
 
-        .percentage {
-            font-size: 18px;
+        /* Winner Prediction Styling */
+        #winnerPrediction {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #predictedWinner {
+            font-size: 20px;
+            font-weight: bold;
             color: #333;
         }
 
-        /* Countdown and Share Section */
-        .countdown, .share-btn-container {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #555;
-        }
-
-        .countdown span, .share-btn-container span {
+        /* Countdown Timer */
+        #countdown {
+            font-size: 22px;
             font-weight: bold;
+            color: #e74c3c;
+            margin-top: 20px;
         }
 
-        /* Admin Panel */
-        .admin-panel {
-            position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 30px;
-            background-color: rgba(0, 0, 0, 0.8);
+        /* Share Button */
+        .share-btn {
+            background-color: #3498db;
             color: white;
-            border-radius: 10px;
-            display: none;
-            z-index: 1000;
-        }
-
-        .admin-panel input {
-            padding: 10px;
-            font-size: 18px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        .admin-panel button {
-            font-size: 18px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: 30px;
             cursor: pointer;
+            font-size: 18px;
+            margin-top: 30px;
         }
 
-        /* Overlay for Admin Panel */
-        .admin-overlay {
+        .share-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Version Display */
+        .version-label {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            color: #ff7e5f;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            border-radius: 5px;
         }
 
         /* Disclaimer */
         .disclaimer {
-            position: absolute;
-            top: 10px;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 16px;
             text-align: center;
-            font-size: 14px;
-            width: 100%;
-            color: #ff7e5f;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <!-- Disclaimer at the Top -->
+    <!-- Disclaimer Message -->
     <div class="disclaimer">
-        This site is only for educational purposes and not an official poll.
-    </div>
-
-    <!-- Version Label -->
-    <div class="version-label">
-        Updated Version 2.0 Alpha
+        This site is only for Educational Purposes. It's just a test poll and not official.
     </div>
 
     <!-- Main Container -->
     <div class="container">
-        <h1>Vote for Dev, Neha, and Nihal</h1>
-        <p>Vote for your preferred candidate:</p>
+        <h1>Vote for Cauvery House Captain</h1>
 
-        <button id="yesBtn">Vote for Dev</button>
-        <button id="noBtn">Vote for Neha</button>
-        <button id="nihalBtn">Vote for Nihal</button>
+        <!-- Vote Buttons -->
+        <button id="devVote">Vote for Dev</button>
+        <button id="nehaVote">Vote for Neha</button>
+        <button id="nihalVote">Vote for Nihal</button>
 
-        <p>Total Votes:</p>
-        <p>Dev: <span id="devVotes">0</span> | Neha: <span id="nehaVotes">0</span> | Nihal: <span id="nihalVotes">0</span></p>
-        
-        <div class="percentage">
-            <p>Winning Percentage:</p>
-            <p>Dev: <span id="devPercentage">0%</span> | Neha: <span id="nehaPercentage">0%</span> | Nihal: <span id="nihalPercentage">0%</span></p>
+        <!-- Vote Count -->
+        <p>Total Votes: <span id="voteCount">0</span></p>
+
+        <!-- Countdown Timer -->
+        <p id="countdown">Time Remaining: <span id="countdownTime">00:00</span></p>
+
+        <!-- Winner Prediction Section -->
+        <div id="winnerPrediction">
+            <h2>Winner Prediction</h2>
+            <p id="predictedWinner">The winner prediction will appear here.</p>
         </div>
 
-        <div class="countdown">
-            <p>Time Left: <span id="timer"></span></p>
-        </div>
-
-        <div class="share-btn-container">
-            <button id="shareBtn">Share</button>
-            <p>Shares: <span id="shareCount">0</span></p>
-        </div>
+        <!-- Share Button -->
+        <button class="share-btn" onclick="sharePage()">Share This Poll</button>
     </div>
 
-    <!-- Admin Panel -->
-    <div class="admin-overlay" id="adminOverlay"></div>
-    <div class="admin-panel" id="adminPanel">
-        <input type="password" id="adminPassword" placeholder="Enter Admin Password">
-        <button id="resetBtn">Reset Votes</button>
-        <button id="resetTimerBtn">Reset Timer</button>
+    <!-- Version Label -->
+    <div class="version-label">
+        Version 2.1 Release 
     </div>
-
-    <!-- Sound Effects -->
-    <audio id="voteSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
-    <audio id="shareSound" src="https://www.soundjay.com/button/beep-09.wav"></audio>
 
     <script>
-        // Variables for votes and countdown
+        // Initialize vote counts for each contestant
         let devVotes = 0;
         let nehaVotes = 0;
         let nihalVotes = 0;
-        let totalShares = 0;
-        let countdownDate = new Date("April 24, 2025 00:00:00").getTime();
+        let totalVotes = 0;
 
-        // DOM elements
-        const devVotesElem = document.getElementById("devVotes");
-        const nehaVotesElem = document.getElementById("nehaVotes");
-        const nihalVotesElem = document.getElementById("nihalVotes");
-        const shareCountElem = document.getElementById("shareCount");
-        const timerElem = document.getElementById("timer");
-        const devPercentageElem = document.getElementById("devPercentage");
-        const nehaPercentageElem = document.getElementById("nehaPercentage");
-        const nihalPercentageElem = document.getElementById("nihalPercentage");
-        const shareBtn = document.getElementById("shareBtn");
+        // Get references to DOM elements
+        let voteCount = document.getElementById("voteCount");
+        let predictedWinner = document.getElementById("predictedWinner");
+        let countdownTime = document.getElementById("countdownTime");
 
-        // Vote Buttons
-        document.getElementById("yesBtn").onclick = function() {
-            devVotes++;
-            updateVotes();
-            document.getElementById("voteSound").play();
-        };
-        document.getElementById("noBtn").onclick = function() {
-            nehaVotes++;
-            updateVotes();
-            document.getElementById("voteSound").play();
-        };
-        document.getElementById("nihalBtn").onclick = function() {
-            nihalVotes++;
-            updateVotes();
-            document.getElementById("voteSound").play();
-        };
+        // Function to update the winner prediction
+        function updateWinnerPrediction() {
+            // Calculate percentages
+            let devPercentage = (devVotes / totalVotes) * 100;
+            let nehaPercentage = (nehaVotes / totalVotes) * 100;
+            let nihalPercentage = (nihalVotes / totalVotes) * 100;
 
-        // Update the votes and percentages
-        function updateVotes() {
-            const totalVotes = devVotes + nehaVotes + nihalVotes;
-            devVotesElem.textContent = devVotes;
-            nehaVotesElem.textContent = nehaVotes;
-            nihalVotesElem.textContent = nihalVotes;
+            // Find the contestant with the highest percentage
+            let winner = "";
+            let highestPercentage = Math.max(devPercentage, nehaPercentage, nihalPercentage);
 
-            const devPercentage = totalVotes > 0 ? ((devVotes / totalVotes) * 100).toFixed(2) : 0;
-            const nehaPercentage = totalVotes > 0 ? ((nehaVotes / totalVotes) * 100).toFixed(2) : 0;
-            const nihalPercentage = totalVotes > 0 ? ((nihalVotes / totalVotes) * 100).toFixed(2) : 0;
+            if (highestPercentage === devPercentage) {
+                winner = "Dev";
+            } else if (highestPercentage === nehaPercentage) {
+                winner = "Neha";
+            } else if (highestPercentage === nihalPercentage) {
+                winner = "Nihal";
+            }
 
-            devPercentageElem.textContent = `${devPercentage}%`;
-            nehaPercentageElem.textContent = `${nehaPercentage}%`;
-            nihalPercentageElem.textContent = `${nihalPercentage}%`;
+            // Update the predicted winner message
+            predictedWinner.textContent = `The predicted winner is ${winner} with ${highestPercentage.toFixed(2)}% of the votes.`;
         }
 
-        // Countdown Timer
-        setInterval(function() {
+        // Voting actions
+        document.getElementById("devVote").onclick = function () {
+            devVotes++;
+            totalVotes++;
+            voteCount.textContent = totalVotes;
+            updateWinnerPrediction();
+        };
+
+        document.getElementById("nehaVote").onclick = function () {
+            nehaVotes++;
+            totalVotes++;
+            voteCount.textContent = totalVotes;
+            updateWinnerPrediction();
+        };
+
+        document.getElementById("nihalVote").onclick = function () {
+            nihalVotes++;
+            totalVotes++;
+            voteCount.textContent = totalVotes;
+            updateWinnerPrediction();
+        };
+
+        // Countdown Timer Function
+        let targetDate = new Date("2025-04-24T00:00:00").getTime();
+        let countdownInterval = setInterval(function() {
             let now = new Date().getTime();
-            let distance = countdownDate - now;
+            let distance = targetDate - now;
+
             let days = Math.floor(distance / (1000 * 60 * 60 * 24));
             let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            timerElem.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            countdownTime.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
             if (distance < 0) {
-                clearInterval(x);
-                timerElem.innerHTML = "EXPIRED";
+                clearInterval(countdownInterval);
+                countdownTime.textContent = "EXPIRED";
             }
         }, 1000);
 
-        // Share Button Logic
-        shareBtn.onclick = function() {
-            totalShares++;
-            shareCountElem.textContent = totalShares;
-            document.getElementById("shareSound").play();
-            alert("Thank you for sharing!");
-        };
-
-        // Admin Panel Logic
-        let adminPassword = "Vesni@2025";
-        const adminOverlay = document.getElementById("adminOverlay");
-        const adminPanel = document.getElementById("adminPanel");
-        const resetBtn = document.getElementById("resetBtn");
-        const resetTimerBtn = document.getElementById("resetTimerBtn");
-
-        // Admin Panel Access
-        function openAdminPanel() {
-            adminOverlay.style.display = "block";
-            adminPanel.style.display = "block";
-        }
-
-        // Reset votes on admin panel
-        resetBtn.onclick = function() {
-            devVotes = 0;
-            nehaVotes = 0;
-            nihalVotes = 0;
-            updateVotes();
-        };
-
-        // Reset timer on admin panel
-        resetTimerBtn.onclick = function() {
-            countdownDate = new Date("April 24, 2025 00:00:00").getTime();
-        };
-
-        // Prompt for password before reset
-        document.getElementById("adminPassword").addEventListener("input", function(event) {
-            if (event.target.value === adminPassword) {
-                openAdminPanel();
+        // Share Function
+        function sharePage() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Vote for Dev - Cauvery House Captain',
+                    url: window.location.href
+                }).then(() => {
+                    alert("Thanks for sharing!");
+                }).catch((err) => {
+                    alert("Error sharing: " + err);
+                });
+            } else {
+                alert("Sharing not supported on this browser.");
             }
-        });
+        }
     </script>
+
 </body>
 </html>
+
